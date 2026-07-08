@@ -1,0 +1,55 @@
+# =====================================================================
+# Obsidian Doc Sync — Python 依赖
+# =====================================================================
+
+# 文件系统监听
+watchdog>=4.0.0
+
+# 配置文件解析
+pyyaml>=6.0.1
+
+# Markdown Frontmatter 读写
+python-frontmatter>=1.1.0
+
+# 日志
+loguru>=0.7.2
+
+# CLI
+click>=8.1.7
+
+# 定时任务（重试调度）
+apscheduler>=3.10.4
+
+# ------------- 文档转换器 -------------
+
+# PDF / DOCX 高质量转换（IBM Docling）
+# 注意：docling 较重，如需轻量可改用 markitdown
+docling>=2.0.0
+
+# Pandoc Python 绑定（需系统安装 pandoc）
+pypandoc>=1.13
+
+# Excel 转换
+openpyxl>=3.1.2
+pandas>=2.2.0
+
+# 轻量多格式支持（兜底）
+markitdown[all]>=0.1.0
+
+# ------------- AI 后处理（可选，按需安装） -------------
+
+# OpenAI
+openai>=1.35.0
+
+# Google Gemini
+google-generativeai>=0.7.0
+
+# Ollama（本地）
+ollama>=0.2.1
+
+# ------------- 工具库 -------------
+# HTTP 请求（Ollama / AI API）
+httpx>=0.27.0
+
+# 进度条（批量处理时显示）
+rich>=13.7.0

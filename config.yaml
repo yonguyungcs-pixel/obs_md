@@ -1,0 +1,199 @@
+# =====================================================================
+# Obsidian Document Auto-Sync Configuration
+# =====================================================================
+
+# ------------- 路径配置 -------------
+paths:
+  # 监听的源文件目录（将文档放入此目录即可自动触发转换）
+  inbox: "D:/DocInbox"   # ← 修改为你的 Inbox 目录
+
+  # Obsidian Vault 根目录（已自动检测到以下 Vault，取消注释选一个）
+  # vault: "E:/bicv_work/tools/bicv_obsidian/bicv_obsidian"   # Vault 1（最近使用）
+  # vault: "D:/tools/bicv_obsidian"                           # Vault 2
+  vault: "D:/tools/bicv_obsidian"   # ← 默认选中 Vault 2，按需切换
+
+  # Vault 内导入文件的子目录前缀
+  import_root: "Imported"
+
+  # 状态数据库路径（绝对路径，存放在项目目录下）
+  state_db: "D:/tools/bicv_obsidian/.obsidian/doc-sync/data/sync_state.db"
+
+  # 日志文件路径
+  log_file: "D:/tools/bicv_obsidian/.obsidian/doc-sync/logs/sync.log"
+
+  # 失败文件的归档目录（相对于 vault）
+  failed_dir: "_Failed"
+
+  # 已删除源文件的 Markdown 归档目录（相对于 vault），move_to_trash 策略使用
+  trash_dir: "_Trash"
+
+# ------------- 格式输出目录映射 -------------
+# 各文件类型在 Vault import_root 下的子目录（默认规则）
+output_dirs:
+  pdf:   "PDF"
+  docx:  "Word"
+  doc:   "Word"
+  xlsx:  "Excel"
+  xls:   "Excel"
+  html:  "HTML"
+  htm:   "HTML"
+  pptx:  "PPT"
+  ppt:   "PPT"
+  epub:  "EPUB"
+  csv:   "CSV"
+  txt:   "Text"
+
+# ------------- Inbox 子目录路由规则 -------------
+# 当源文件路径包含指定子目录时，覆盖 import_root，输出到专属 Vault 目录
+# 格式：inbox_path_rules[n].match = Inbox 内的子路径关键词（匹配即生效）
+#       inbox_path_rules[n].import_root = 对应的 Vault 输出根目录
+inbox_path_rules:
+  - match: "ue"          # D:/DocInbox/ue/ → Vault/3G125/MD_UE/
+    import_root: "3G125/MD_UE"
+    include_keywords:
+      - "空调"
+      - "桌面"
+      - "连接"
+      - "下拉"
+      - "设置"
+      - "驾驶能耗"
+      - "车身模式"
+      - "驾驶模式"
+  - match: "sfs"         # D:/DocInbox/sfs/ → Vault/3G125/MD_SFS/
+    import_root: "3G125/MD_SFS"
+
+# ------------- 监听配置 -------------
+watcher:
+  # 是否递归监听子目录
+  recursive: true
+
+  # 防抖延迟（秒）：同一文件多次事件合并为一次处理
+  debounce_seconds: 2.0
+
+  # 文件稳定性等待（秒）：文件写入完毕后等待时间
+  settle_seconds: 1.0
+
+  # 排除不处理的扩展名
+  # html/htm: 暂不处理
+  # 二进制/压缩/音频/图片格式：无法转换为 Markdown
+  exclude_extensions:
+    - html
+    - htm
+    - png
+    - jpg
+    - jpeg
+    - zip
+    - rar
+    - 7z
+    - wav
+    - mp3
+    - mp4
+    - WeDrive
+    - lnk
+    - url
+    - DS_Store
+    - xml
+    - c
+
+# ------------- 转换器配置 -------------
+converters:
+  pdf:
+    # 可选: docling | marker | markitdown
+    engine: "docling"
+    # docling 特定选项
+    docling:
+      # 是否提取图片（提取到 vault 的 assets 目录）
+      extract_images: true
+      # 图片保存子目录
+      images_dir: "assets/images"
+
+  word:
+    # 可选: pandoc | docling | markitdown
+    engine: "pandoc"
+
+  html:
+    # 可选: pandoc | markitdown
+    engine: "pandoc"
+    pandoc:
+      # pandoc 额外参数
+      extra_args: ["--wrap=none", "--strip-comments"]
+
+  excel:
+    # 可选: pandas | openpyxl
+    engine: "pandas"
+    # 最大行数限制（防止超大 Excel 撑爆内存）
+    max_rows: 5000
+    # 多 Sheet 处理：all | first | named
+    sheets: "all"
+
+# ------------- 删除策略 -------------
+on_delete:
+  # 可选: mark_deleted | move_to_trash | delete | ignore
+  strategy: "mark_deleted"
+
+# ------------- 错误处理 -------------
+error_handling:
+  # 最大自动重试次数
+  max_retries: 3
+
+  # 重试间隔（秒）
+  retry_interval_seconds: 300
+
+  # 失败后是否移动源文件到 failed_dir
+  move_failed_source: false
+
+# ------------- AI 后处理（可选） -------------
+ai:
+  # 是否启用 AI 后处理
+  enabled: false
+
+  # AI 提供商: openai | gemini | deepseek | ollama
+  provider: "deepseek"   # ← 推荐：DeepSeek 性价比最高
+
+  # OpenAI 配置
+  openai:
+    api_key: ""          # 留空则读取环境变量 OPENAI_API_KEY
+    model: "gpt-4o-mini"
+    base_url: ""         # 留空使用默认；可设置为兼容 API 地址
+
+  # Google Gemini 配置
+  gemini:
+    api_key: ""          # 留空则读取环境变量 GOOGLE_API_KEY
+    model: "gemini-1.5-flash"
+
+  # DeepSeek 配置（性价比最高，兼容 OpenAI SDK）
+  deepseek:
+    api_key: ""          # 留空则读取环境变量 DEEPSEEK_API_KEY
+    model: "deepseek-chat"
+    base_url: "https://api.deepseek.com/v1"
+
+  # Ollama 本地配置（完全离线）
+  ollama:
+    base_url: "http://localhost:11434"
+    model: "qwen2.5:7b"
+
+  # AI 处理功能开关
+  features:
+    summary: true          # 自动生成摘要
+    tags: true             # 自动生成标签
+    category: false        # 自动分类
+    todos: false           # 提取待办事项
+    knowledge_cards: false # 生成知识卡片
+    internal_links: false  # 建立内部链接（需要 Vault 索引）
+
+  # AI 最大 Token 限制（输入文档长度截断）
+  max_input_chars: 8000
+
+# ------------- 日志配置 -------------
+logging:
+  # 日志级别: DEBUG | INFO | WARNING | ERROR
+  level: "INFO"
+
+  # 日志文件最大大小（MB）
+  max_size_mb: 10
+
+  # 最多保留几份滚动日志
+  backup_count: 5
+
+  # 是否同时输出到控制台
+  console: true
