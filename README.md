@@ -1,3 +1,5 @@
+[English](README_en.md) | [中文](README.md)
+
 # Obsidian 文档自动同步系统
 
 将 PDF、Word、Excel、HTML 等文档**自动转换为 Markdown** 并同步到 Obsidian Vault，全程无需人工干预。
