@@ -4,6 +4,7 @@ import yaml
 from pathlib import Path
 
 inbox_dir = Path(r"D:\DocInbox\sfs")
+backup_dir = Path(r"D:\DocInbox_Backup_Doc\sfs")
 db_path = Path(r"D:\tools\bicv_obsidian\.obsidian\doc-sync\data\sync_state.db")
 md_path = Path(r"D:\tools\bicv_obsidian\3G125\MD_SFS\00_SFS转换进度与自动同步说明.md")
 
@@ -59,6 +60,21 @@ for proj, data in sorted(projects.items()):
             output.append(f"- {f}")
     
     output.append("")
+
+output.append("\n## 🛠️ 历史遗留 .doc 老古董文件特殊处理记录\n")
+output.append("> 这些十几年前的老版本 .doc 文件曾经导致转换引擎卡死，现已全部由后备的 WPS 引擎自动化转换为了 .docx 格式。下表列出这批被物理超度的文件原路径：\n")
+
+doc_count = 0
+for root, _, files in os.walk(backup_dir):
+    for file in files:
+        if file.lower().endswith(".doc") and not file.startswith("~$"):
+            doc_count += 1
+            full_path = Path(root) / file
+            rel_path = full_path.relative_to(backup_dir)
+            output.append(f"- DocInbox/sfs/{rel_path}")
+
+if doc_count == 0:
+    output.append("- *暂无遗留老文件处理记录。*")
 
 report = "\n".join(output)
 

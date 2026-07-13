@@ -61,6 +61,8 @@ inbox_path_rules:
       - "驾驶模式"
   - match: "sfs"         # D:/DocInbox/sfs/ → Vault/3G125/MD_SFS/
     import_root: "3G125/MD_SFS"
+  - match: "fl"          # D:/DocInbox/fl/ → Vault/3G125/MD_FL/
+    import_root: "3G125/MD_FL"
 
 # ------------- 监听配置 -------------
 watcher:
@@ -109,7 +111,10 @@ converters:
 
   word:
     # 可选: pandoc | docling | markitdown
-    engine: "pandoc"
+    engine: "docling"
+    docling:
+      extract_images: true
+      images_dir: "assets/images"
 
   html:
     # 可选: pandoc | markitdown

@@ -100,12 +100,20 @@ def _df_to_markdown(df: Any) -> str:
     if df.empty:
         return "_（空表格）_"
 
+    # 辅助函数：清理单元格文本（处理特殊字符和换行）
+    def clean_text(text: Any) -> str:
+        s = str(text)
+        s = s.replace("|", "\\|")
+        s = s.replace("\r\n", "<br>").replace("\n", "<br>").replace("\r", "")
+        return s
+
     headers = list(df.columns)
-    col_widths = [max(len(str(h)), _max_col_width(df, h)) for h in headers]
+    clean_headers = [clean_text(h) for h in headers]
+    col_widths = [max(len(clean_headers[i]), _max_col_width(df, h)) for i, h in enumerate(headers)]
 
     # 表头行
     header_row = "| " + " | ".join(
-        str(h).ljust(col_widths[i]) for i, h in enumerate(headers)
+        clean_headers[i].ljust(col_widths[i]) for i in range(len(headers))
     ) + " |"
 
     # 分隔行
@@ -115,7 +123,7 @@ def _df_to_markdown(df: Any) -> str:
     data_rows = []
     for _, row in df.iterrows():
         cells = [
-            str(row[h]).replace("|", "\\|").ljust(col_widths[i])
+            clean_text(row[h]).ljust(col_widths[i])
             for i, h in enumerate(headers)
         ]
         data_rows.append("| " + " | ".join(cells) + " |")

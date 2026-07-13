@@ -65,7 +65,8 @@ class PDFConverter(BaseConverter):
             # 缩放矩阵 2.0，保持较高清晰度 (大约 144 DPI)
             pix = page.get_pixmap(matrix=fitz.Matrix(2.0, 2.0))
             
-            img_name = f"{source_path.stem}_page_{page_num + 1:03d}.png"
+            safe_stem = source_path.stem.replace('(', '_').replace(')', '_').replace(' ', '_')
+            img_name = f"{safe_stem}_page_{page_num + 1:03d}.png"
             img_path = img_dir / img_name
             
             try:
