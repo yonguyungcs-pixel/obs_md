@@ -207,3 +207,20 @@ A: Check `logs/sync.log`; run `python sync_daemon.py status` to see the status.
 
 **Q: How to switch Vault?**  
 A: Modify `paths.vault` in `config.yaml` and restart the daemon.
+
+---
+
+## Changelog
+
+### v1.1.0 - 2026-07-13
+- **Optimization**: Updated logic for Excel, PDF, and Word converters.
+- **Added**: Batch reset scripts such as `reset_all.py`, `reset_sfs_all.py`.
+- **Testing**: Added conversion test cases like `test_docling_md.py`, `test_pandoc.py`.
+- **Fix**: Improved database operations and Markdown generation sync logic.
+
+### v1.0.1 - 2026-07-08
+- **Added**: WPS-related batch conversion scripts (`convert_wps_batch.py`, etc.).
+- **Added**: Internationalization support with English README.
+
+### v1.0.0 - 2026-07-08
+- **Initial Release**: Implemented automated multi-format document tracking via watchdog, AI processing, and Obsidian syncing.
