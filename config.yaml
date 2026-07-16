@@ -5,7 +5,7 @@
 # ------------- 路径配置 -------------
 paths:
   # 监听的源文件目录（将文档放入此目录即可自动触发转换）
-  inbox: "D:/DocInbox"   # ← 修改为你的 Inbox 目录
+  inbox: "D:/tools/bicv_obsidian/1.Projects/3g125/原始资料"   # ← 修改为新的原始资料目录
 
   # Obsidian Vault 根目录（已自动检测到以下 Vault，取消注释选一个）
   # vault: "E:/bicv_work/tools/bicv_obsidian/bicv_obsidian"   # Vault 1（最近使用）
@@ -48,8 +48,8 @@ output_dirs:
 # 格式：inbox_path_rules[n].match = Inbox 内的子路径关键词（匹配即生效）
 #       inbox_path_rules[n].import_root = 对应的 Vault 输出根目录
 inbox_path_rules:
-  - match: "ue"          # D:/DocInbox/ue/ → Vault/3G125/MD_UE/
-    import_root: "3G125/MD_UE"
+  - match: "ue"
+    import_root: "1.Projects/3g125/转化成果/04.资料/3G125资料库/UE"
     include_keywords:
       - "空调"
       - "桌面"
@@ -59,10 +59,10 @@ inbox_path_rules:
       - "驾驶能耗"
       - "车身模式"
       - "驾驶模式"
-  - match: "sfs"         # D:/DocInbox/sfs/ → Vault/3G125/MD_SFS/
-    import_root: "3G125/MD_SFS"
-  - match: "fl"          # D:/DocInbox/fl/ → Vault/3G125/MD_FL/
-    import_root: "3G125/MD_FL"
+  - match: "sfs"
+    import_root: "1.Projects/3g125/转化成果/04.资料/3G125资料库/SFS"
+  - match: "fl"
+    import_root: "1.Projects/3g125/转化成果/04.资料/3G125资料库/FL"
 
 # ------------- 监听配置 -------------
 watcher:

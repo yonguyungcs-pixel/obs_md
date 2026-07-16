@@ -1,0 +1,101 @@
+paths:
+  inbox: E:\\bicv_work\\3G125_S
+  vault: D:/tools/bicv_obsidian
+  import_root: Imported
+  state_db: D:/tools/bicv_obsidian/.obsidian/doc-sync/data/sync_state.db
+  log_file: D:/tools/bicv_obsidian/.obsidian/doc-sync/logs/sync.log
+  failed_dir: _Failed
+  trash_dir: _Trash
+output_dirs:
+  pdf: PDF
+  docx: Word
+  doc: Word
+  xlsx: Excel
+  xls: Excel
+  html: HTML
+  htm: HTML
+  pptx: PPT
+  ppt: PPT
+  epub: EPUB
+  csv: CSV
+  txt: Text
+inbox_path_rules: []
+watcher:
+  recursive: true
+  debounce_seconds: 2.0
+  settle_seconds: 1.0
+  exclude_extensions:
+  - html
+  - htm
+  - png
+  - jpg
+  - jpeg
+  - zip
+  - rar
+  - 7z
+  - wav
+  - mp3
+  - mp4
+  - WeDrive
+  - lnk
+  - url
+  - DS_Store
+  - xml
+  - c
+converters:
+  pdf:
+    engine: docling
+    docling:
+      extract_images: true
+      images_dir: assets/images
+  word:
+    engine: docling
+    docling:
+      extract_images: true
+      images_dir: assets/images
+  html:
+    engine: pandoc
+    pandoc:
+      extra_args:
+      - --wrap=none
+      - --strip-comments
+  excel:
+    engine: pandas
+    max_rows: 5000
+    sheets: all
+on_delete:
+  strategy: mark_deleted
+error_handling:
+  max_retries: 3
+  retry_interval_seconds: 300
+  move_failed_source: false
+ai:
+  enabled: false
+  provider: deepseek
+  openai:
+    api_key: ''
+    model: gpt-4o-mini
+    base_url: ''
+  gemini:
+    api_key: ''
+    model: gemini-1.5-flash
+  deepseek:
+    api_key: ''
+    model: deepseek-chat
+    base_url: https://api.deepseek.com/v1
+  ollama:
+    base_url: http://localhost:11434
+    model: qwen2.5:7b
+  features:
+    summary: true
+    tags: true
+    category: false
+    todos: false
+    knowledge_cards: false
+    internal_links: false
+  max_input_chars: 8000
+logging:
+  level: INFO
+  max_size_mb: 10
+  backup_count: 5
+  console: true
